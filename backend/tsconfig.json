@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    // --- File Layout ---
+    // Source files live in src/, compiled output goes to dist/
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // --- Environment Settings ---
+    // "nodenext" handles Node.js module resolution (supports .js extensions in imports)
+    "module": "nodenext",
+    // Target modern Node.js — supports async/await, optional chaining, etc.
+    "target": "ES2020",
+    // Include Node.js built-in type definitions
+    "types": ["node"],
+
+    // --- Module Interop ---
+    // Allows default imports from CommonJS modules (express, bcryptjs, etc.)
+    "esModuleInterop": true,
+    // Ensures consistent import behavior across tools
+    "forceConsistentCasingInFileNames": true,
+
+    // --- Output Options ---
+    // Generates .js.map files for debugging
+    "sourceMap": true,
+    // Generates .d.ts type declaration files
+    "declaration": true,
+
+    // --- Strict Type Checking ---
+    // Enables all strict type-checking options
+    "strict": true,
+    // Prevents accessing potentially undefined array/object values without checking
+    "noUncheckedIndexedAccess": true,
+    // Ensures isolated file compilation (required by many modern tools)
+    "isolatedModules": true,
+    // Skips type-checking of node_modules .d.ts files (faster builds)
+    "skipLibCheck": true,
+    // Ensures every file is treated as a module
+    "moduleDetection": "force",
+
+    // --- Emit Settings ---
+    // Resolves JSON imports (useful for package.json, config files)
+    "resolveJsonModule": true
+  },
+  // Only compile files inside src/
+  "include": ["src/**/*"],
+  // Never compile these directories
+  "exclude": ["node_modules", "dist"]
+}

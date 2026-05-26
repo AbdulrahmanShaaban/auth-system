@@ -49,15 +49,15 @@ auth-system/
 ### Backend
 ```bash
 cd backend
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ### Frontend
 ```bash
 cd frontend
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ### Environment Variables

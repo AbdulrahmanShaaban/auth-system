@@ -11,36 +11,22 @@ interface AuthState {
   checkAuth: () => Promise<void>;
 }
 
-// helpers
-const setTokenCookie = (token: string) => {
-  document.cookie = `token=${token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
-};
-
-const clearTokenCookie = () => {
-  document.cookie = 'token=; path=/; max-age=0';
-};
-
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  isLoading: true,
+  isLoading: true, // Start as true so we can show loading state on initial app load
 
   login: async (credentials) => {
     const response = await api.post('/auth/login', credentials);
-    const { user, token } = response.data;
-    if (token) setTokenCookie(token);       // ← احفظ الـ token في cookie
-    set({ user });
+    set({ user: response.data.user });
   },
 
   register: async (userData) => {
     const response = await api.post('/auth/register', userData);
-    const { user, token } = response.data;
-    if (token) setTokenCookie(token);       // ← نفس الشيء هنا
-    set({ user });
+    set({ user: response.data.user });
   },
 
   logout: async () => {
     await api.post('/auth/logout');
-    clearTokenCookie();                     // ← امسح الـ cookie
     set({ user: null });
   },
 
@@ -49,7 +35,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const response = await api.get('/auth/me');
       set({ user: response.data.user, isLoading: false });
-    } catch {
+    } catch (error) {
       set({ user: null, isLoading: false });
     }
   },

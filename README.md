@@ -1,4 +1,4 @@
-# Capsule Corp — Auth Starter 🚀
+# Capsule Corp — Auth Starter
 
 A full-stack authentication starter built with the MERN stack and Next.js App Router.
 

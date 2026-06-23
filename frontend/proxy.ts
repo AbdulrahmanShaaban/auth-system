@@ -1,15 +1,17 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const { pathname } = request.nextUrl;
 
   // Protected routes
   const isProtectedRoute = pathname === '/dashboard' || pathname === '/';
-  
+
   // Auth routes (should not be accessible if already logged in)
-  const isAuthRoute = pathname.startsWith('/auth/login') || pathname.startsWith('/auth/register');
+  const isAuthRoute =
+    pathname.startsWith('/auth/login') ||
+    pathname.startsWith('/auth/register');
 
   if (isProtectedRoute && !token) {
     // Redirect to login if trying to access a protected route without a token
@@ -25,6 +27,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Apply middleware to all routes except api, _next/static, _next/image, favicon.ico
+  // Apply proxy to all routes except api, _next/static, _next/image, favicon.ico
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
